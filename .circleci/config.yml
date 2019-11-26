@@ -1,0 +1,16 @@
+version: 2.1
+jobs:
+  compile:
+    docker:
+      - image: mhmmdfas/mydockerimage:latest
+    steps:
+      - run: apt-get -y update && apt-get -y upgrade
+      - run: git clone --quiet -j32 https://github.com/Mhmmdfas/kernel-rolex-msm8917 -b lineage-16.0 --depth=1 .
+      - run: wget https://raw.githubusercontent.com/timangpopi/build-bot/master/gcc-rolex.sh
+      - run: chmod +x gcc-rolex.sh
+      - run: bash gcc-rolex.sh
+workflows:
+  version: 2.1
+  cooking:
+    jobs:
+      - compile
